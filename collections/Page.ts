@@ -1,93 +1,93 @@
-import { CollectionConfig } from 'payload/types';
-import { MediaType } from './Media';
-import formatSlug from '../utilities/formatSlug';
-import { Image } from '../blocks/Image/Config';
-import { Type as ImageType } from '../blocks/Image/Component';
-import { CallToAction } from '../blocks/CallToAction/Config';
-import { Type as CallToActionType } from '../blocks/CallToAction/Component';
-import { Content } from '../blocks/Content/Config';
-import { Type as ContentType } from '../blocks/Content/Component';
+import { CollectionConfig } from "payload/types";
+import { MediaType } from "./Media";
+import formatSlug from "../utilities/formatSlug";
+import { Image } from "../blocks/Image/Config";
+import { Type as ImageType } from "../blocks/Image/Component";
+import { CallToAction } from "../blocks/CallToAction/Config";
+import { Type as CallToActionType } from "../blocks/CallToAction/Component";
+import { Content } from "../blocks/Content/Config";
+import { Type as ContentType } from "../blocks/Content/Component";
+import Spacer, { Type as SpacerType } from "../blocks/Spacer";
+import Quote, { Type as QuoteType } from "../blocks/Quote";
 
-
-export type Layout = CallToActionType | ContentType | ImageType
+export type Layout =
+  | CallToActionType
+  | ContentType
+  | ImageType
+  | SpacerType
+  | QuoteType;
 
 export type Type = {
-  title: string
-  slug: string
-  image?: MediaType
-  layout: Layout[]
+  title: string;
+  slug: string;
+  image?: MediaType;
+  layout: Layout[];
   meta: {
-    title?: string
-    description?: string
-    keywords?: string
-  }
-}
+    title?: string;
+    description?: string;
+    keywords?: string;
+  };
+};
 
 export const Page: CollectionConfig = {
-  slug: 'pages',
+  slug: "pages",
   admin: {
-    useAsTitle: 'title',
+    useAsTitle: "title",
   },
   access: {
     read: (): boolean => true, // Everyone can read Pages
   },
   fields: [
     {
-      name: 'title',
-      label: 'Page Title',
-      type: 'text',
+      name: "title",
+      label: "Page Title",
+      type: "text",
       required: true,
     },
     {
-      name: 'image',
-      label: 'Featured Image',
-      type: 'upload',
-      relationTo: 'media',
+      name: "image",
+      label: "Featured Image",
+      type: "upload",
+      relationTo: "media",
     },
     {
-      name: 'layout',
-      label: 'Page Layout',
-      type: 'blocks',
+      name: "layout",
+      label: "Page Layout",
+      type: "blocks",
       minRows: 1,
-      blocks: [
-        CallToAction,
-        Content,
-        Image,
-      ],
+      blocks: [CallToAction, Content, Image, Spacer, Quote],
     },
     {
-      name: 'meta',
-      label: 'Page Meta',
-      type: 'group',
+      name: "meta",
+      label: "Page Meta",
+      type: "group",
       fields: [
         {
-          name: 'title',
-          label: 'Title',
-          type: 'text',
+          name: "title",
+          label: "Title",
+          type: "text",
         },
         {
-          name: 'description',
-          label: 'Description',
-          type: 'textarea',
+          name: "description",
+          label: "Description",
+          type: "textarea",
         },
         {
-          name: 'keywords',
-          label: 'Keywords',
-          type: 'text',
+          name: "keywords",
+          label: "Keywords",
+          type: "text",
         },
       ],
     },
     {
-      name: 'slug',
-      label: 'Page Slug',
-      type: 'text',
+      name: "slug",
+      label: "Page Slug",
+      type: "text",
       admin: {
-        position: 'sidebar',
+        position: "sidebar",
       },
       hooks: {
-        beforeValidate: [
-          formatSlug('title'),
-        ],
+        beforeValidate: [formatSlug("title")],
       },
     },
   ],
